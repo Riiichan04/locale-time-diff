@@ -2,8 +2,10 @@ import { defaultLocalization } from "./defaultLocalization";
 import { handlers } from "./handler";
 import Localization, { TimeLocalization } from "./localize";
 
+export {Localization, TimeLocalization }
+
 /**
- * Interface representing the options for the `howLongAgo` function.
+ * Interface representing the options for the `getTimeDifference` function.
  * @property locale - Specifies the desired localization. Can be a string key (e.g., 'en', 'vi') for
  * predefined localizations in `defaultLocalization`, or a custom `Localization` object to override or extend default settings.
  * @property compareTime - The reference time against which `dateInput` will be compared. 
@@ -17,7 +19,7 @@ export interface Option {
 }
 
 /**
- * Interface representing the dertailed result returned by `howLongAgo` function.
+ * Interface representing the dertailed result returned by `getTimeDifference` function.
  * @property text - The formatted string indicating how long ago or in the future the `dateInput` is (e.g., "5 minutes ago", "1 year ago").
  * @property unit - The time unit used in the `text`.
  * @property rawDiffMiliseconds - The exact difference in miliseconds between `dateInput` and `compareTime`. A negative value indicates `dateInput` in the future.
@@ -47,7 +49,7 @@ export interface Result {
  * //How long ago was yesterday?
  * const yesterday = new Date();
  * yesterday.setDate(yesterday.getDate() - 1);
- * console.log(howLongAgo(yesterday, {locale: 'en'}))
+ * console.log(getTimeDifference(yesterday, {locale: 'en'}))
  * 
  * //Expected output:
  * //{ text: '1 day ago', unit: 'day', ... }
@@ -58,13 +60,13 @@ export interface Result {
  * // How long until tomorrow?
  * const tomorrow = new Date();
  * tomorrow.setDate(tomorrow.getDate() + 1);
- * console.log(howLongAgo(tomorrow, { locale: 'vi' }));
+ * console.log(getTimeDifference(tomorrow, { locale: 'vi' }));
  * 
  * // Expected output: 
  * //{ text: 'Sau 1 ngày', unit: 'day', ... }
  * ```
  */
-export default function howLongAgo(dateInput: Date | number | string, option: Option): Result {
+export default function getTimeDifference(dateInput: Date | number | string, option: Option): Result {
     const date = new Date(dateInput)
     const now = option.compareTime ? new Date(option.compareTime) : new Date()
 
@@ -112,6 +114,15 @@ export default function howLongAgo(dateInput: Date | number | string, option: Op
 }
 
 /**
+ * An object containing partial or complete localization for the specified name.
+ */
+type PartialLocalization = {
+    justNow?: string;
+    pastTimeLocalization?: Partial<TimeLocalization>;
+    futureTimeLocalization?: Partial<TimeLocalization>;
+}
+
+/**
  * Extends the `defaultLocalization` object with a new custom localization.
  * This function allows you to add or override localization settings for specific languages.
  * When a partial `localize` object is provided, it will be merged with the default English localization
@@ -119,12 +130,9 @@ export default function howLongAgo(dateInput: Date | number | string, option: Op
  * @param name - The unique key (e.g., 'fr', 'jp') for the new localization to be added or updated.
  * @param localize - An object containing partial or complete localization for the specified name.
  * @see defaultLocalization For the structure of localization objects.
+ * @see PartialLocalization
  */
-export function addLocale(name: string, localize: {
-    justNow?: string;
-    pastTimeLocalization?: Partial<TimeLocalization>;
-    futureTimeLocalization?: Partial<TimeLocalization>;
-}) {
+export function addLocale(name: string, localize: PartialLocalization) {
     const baseLocale = defaultLocalization[name] || defaultLocalization['en']
 
     defaultLocalization[name] = {
