@@ -1,0 +1,41 @@
+{
+  "name": "locale-time-diff",
+  "version": "1.0.0",
+  "description": "Display time differences with localization language",
+  "keywords": [
+    "localization",
+    "datetime",
+    "time-differences"
+  ],
+  "author": "Regiko04",
+  "license": "MIT",
+  "main": "index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.6.2",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Riiichan04/locale-time-diff.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Riiichan04/locale-time-diff/issues"
+  },
+  "homepage": "https://github.com/Riiichan04/locale-time-diff#readme"
+}
