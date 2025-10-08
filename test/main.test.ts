@@ -25,7 +25,7 @@ describe('howLongAgo', () => {
         expect(resultPast.unit).toBe('Just now');
         expect(resultPast.isFuture).toBe(false);
 
-        const resultFuture = howLongAgo(future, { locale: 'en' });
+        const resultFuture = howLongAgo(future);
         expect(resultFuture.text).toBe('Just now');
         expect(resultFuture.unit).toBe('Just now');
         expect(resultFuture.isFuture).toBe(true);

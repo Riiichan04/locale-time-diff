@@ -2,7 +2,7 @@ import { defaultLocalization } from "./defaultLocalization";
 import { handlers } from "./handler";
 import Localization, { TimeLocalization } from "./localize";
 
-export {Localization, TimeLocalization }
+export { Localization, TimeLocalization }
 
 /**
  * Interface representing the options for the `getTimeDifference` function.
@@ -66,16 +66,17 @@ export interface Result {
  * //{ text: 'Sau 1 ngày', unit: 'day', ... }
  * ```
  */
-export default function getTimeDifference(dateInput: Date | number | string, option: Option): Result {
+export default function getTimeDifference(dateInput: Date | number | string, option?: Option): Result {
     const date = new Date(dateInput)
-    const now = option.compareTime ? new Date(option.compareTime) : new Date()
+    const currentOption: Option = option ? option : {}
+    const now = currentOption.compareTime ? new Date(currentOption.compareTime) : new Date()
 
     let localization: Localization
-    if (typeof option.locale === 'string') {
-        localization = defaultLocalization[option.locale] || defaultLocalization['en']
+    if (typeof currentOption.locale === 'string') {
+        localization = defaultLocalization[currentOption.locale] || defaultLocalization['en']
     }
-    else if (typeof option.locale === 'object' && option.locale !== null) {
-        localization = { ...defaultLocalization['en'], ...option.locale }  //If input locale has not enough fields
+    else if (typeof currentOption.locale === 'object' && currentOption.locale !== null) {
+        localization = { ...defaultLocalization['en'], ...currentOption.locale }  //If input locale has not enough fields
     }
     else localization = defaultLocalization['en']   //Default to English if no locale is specified
 
