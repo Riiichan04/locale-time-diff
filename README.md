@@ -32,10 +32,10 @@ const now = new Date();
 const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000); // 1 hour ago
 const twoDaysLater = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000); // 2 days from now
 
-console.log(getTimeDifference(oneHourAgo, { locale: 'en' }).text);
+console.log(getTimeDifference(oneHourAgo).text);
 // Output (approx.): "1 hour ago"
 
-console.log(getTimeDifference(twoDaysLater, { locale: 'en' }).text);
+console.log(getTimeDifference(twoDaysLater).text);
 // Output (approx.): "In 2 days"
 
 const justNow = new Date(now.getTime() - 3000); // 3 seconds ago

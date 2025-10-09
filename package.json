@@ -1,6 +1,6 @@
 {
   "name": "locale-time-diff",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Display time differences with localization language",
   "keywords": [
     "localization",
