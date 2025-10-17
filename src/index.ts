@@ -1,6 +1,6 @@
 import { defaultLocalization } from "./defaultLocalization";
-import { handlers } from "./handler";
-import Localization, { TimeLocalization } from "./localize";
+import { getLocalizedString, handlers } from "./handler";
+import Localization, { TimeLocalization, TimeLocalizationKeys } from "./localize";
 
 export { Localization, TimeLocalization }
 
@@ -98,7 +98,13 @@ export default function getTimeDifference(dateInput: Date | number | string, opt
     for (let handler of handlers) {
         if (absDiffMilisecond >= handler.threshold) {
             const count = Math.floor(absDiffMilisecond / handler.threshold)
-            const textHandler = handler.getString(localization, count, isFuture)
+            const timeLocalize = isFuture ? localization.futureTimeLocalization : localization.pastTimeLocalization
+
+            const keys = TimeLocalizationKeys[handler.name]
+            const singularKey = keys.singular
+            const pluralKey = keys.plural
+
+            const textHandler = getLocalizedString(timeLocalize, count, singularKey, pluralKey)
 
             return {
                 isFuture: isFuture,

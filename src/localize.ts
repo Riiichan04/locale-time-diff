@@ -1,3 +1,27 @@
+import { HandlerTimeUnit } from "./handler";
+
+/**
+ * @constant
+ * A static map that links the Handler name (e.g., 'year') to the coressponding singular and plural keys.
+ * This type ensures that every unit defined in `HandlerTimeUnit` has both singular and plural keys defined in `TimeLocalization`.
+ * @since 1.1.0
+ */
+export const TimeLocalizationKeys: {
+    [K in HandlerTimeUnit]: {
+        singular: K & keyof TimeLocalization,
+        //To make sure the 's' suffix correctly coressponds to an existing property in TimeLocalization.
+        plural: TimeLocalization[K extends keyof TimeLocalization ? `${K}s` : never] extends string ? `${K}s` & keyof TimeLocalization : never
+    }
+} = {
+    year: { singular: 'year', plural: 'years' },
+    month: { singular: 'month', plural: 'months' },
+    week: { singular: 'week', plural: 'weeks' },
+    day: { singular: 'day', plural: 'days' },
+    hour: { singular: 'hour', plural: 'hours' },
+    minute: { singular: 'minute', plural: 'minutes' },
+    second: { singular: 'second', plural: 'seconds' },
+} as const;
+
 /**
  * Defines the structure for a complete localization object, containing strings for "just now", past tense, and future tense time differences.
  * @property {string} justNow - The string used for immediate time differences (e.g., "Just now").
